@@ -1,8 +1,7 @@
 import numpy as np
 import numpy.linalg as LA
-import matplotlib.pyplot as plt
 
-from lcnn.utils import argsort2d
+from .utils import argsort2d
 
 DX = [0, 0, 1, -1, 1, 1, -1, -1]
 DY = [1, -1, 0, 0, 1, -1, 1, -1]
@@ -101,8 +100,8 @@ def vectorized_wireframe_2d_metric(
     vert_pred = vert_pred[sorted_confidence, :-1]
     dpth_pred = dpth_pred[sorted_confidence]
     d = np.sqrt(
-        np.sum(vert_pred ** 2, 1)[:, None]
-        + np.sum(vert_gt ** 2, 1)[None, :]
+        np.sum(vert_pred**2, 1)[:, None]
+        + np.sum(vert_gt**2, 1)[None, :]
         - 2 * vert_pred @ vert_gt.T
     )
     choice = np.argmin(d, 1)
@@ -126,7 +125,7 @@ def vectorized_wireframe_2d_metric(
     n = max(np.sum(hit), 1)
     loss_L1 /= n
     loss_L2 /= n
-    loss_SIL = np.sum(SIL ** 2) / n - np.sum(SIL) ** 2 / (n * n)
+    loss_SIL = np.sum(SIL**2) / n - np.sum(SIL) ** 2 / (n * n)
 
     # staging 3: compute mAP for edge matching
     edgeset = set([frozenset(e) for e in edge_gt])
@@ -153,8 +152,8 @@ def vectorized_wireframe_3d_metric(
     vert_pred = np.hstack([vert_pred[:, :-1], dpth_pred[:, None]])[sorted_confidence]
     vert_gt = np.hstack([vert_gt[:, :-1], dpth_gt[:, None]])
     d = np.sqrt(
-        np.sum(vert_pred ** 2, 1)[:, None]
-        + np.sum(vert_gt ** 2, 1)[None, :]
+        np.sum(vert_pred**2, 1)[:, None]
+        + np.sum(vert_gt**2, 1)[None, :]
         - 2 * vert_pred @ vert_gt.T
     )
     choice = np.argmin(d, 1)

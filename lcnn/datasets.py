@@ -1,7 +1,4 @@
 import glob
-import json
-import math
-import os
 import random
 
 import numpy as np
@@ -11,7 +8,7 @@ from skimage import io
 from torch.utils.data import Dataset
 from torch.utils.data.dataloader import default_collate
 
-from lcnn.config import M
+from .config import M
 
 
 class WireframeDataset(Dataset):

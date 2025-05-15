@@ -1,13 +1,8 @@
-import itertools
-import random
-from collections import defaultdict
-
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from lcnn.config import M
+from ..config import M
 
 FEATURE_DIM = 8
 
@@ -227,7 +222,7 @@ class LineVectorizer(nn.Module):
             xyu, xyv = xy[u], xy[v]
 
             u2v = xyu - xyv
-            u2v /= torch.sqrt((u2v ** 2).sum(-1, keepdim=True)).clamp(min=1e-6)
+            u2v /= torch.sqrt((u2v**2).sum(-1, keepdim=True)).clamp(min=1e-6)
             feat = torch.cat(
                 [
                     xyu / 128 * M.use_cood,

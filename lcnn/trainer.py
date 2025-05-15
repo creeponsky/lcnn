@@ -4,7 +4,6 @@ import os.path as osp
 import shutil
 import signal
 import subprocess
-import threading
 import time
 from timeit import default_timer as timer
 
@@ -12,12 +11,11 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import torch.nn.functional as F
 from skimage import io
 from tensorboardX import SummaryWriter
 
-from lcnn.config import C, M
-from lcnn.utils import recursive_to
+from .config import C, M
+from .utils import recursive_to
 
 
 class Trainer(object):
@@ -165,7 +163,6 @@ class Trainer(object):
 
         time = timer()
         for batch_idx, (image, meta, target) in enumerate(self.train_loader):
-
             self.optim.zero_grad()
             self.metrics[...] = 0
 
